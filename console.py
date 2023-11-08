@@ -1,13 +1,15 @@
 #!/usr/bin/python3
-"""Defines the HBnB console."""
+"""Import Initialization for Console.py for BNB."""
+
 import cmd
 import re
 from shlex import split
 from models import storage
 from models.base_model import BaseModel
 
+
 def parseTokenizer(arg):
-    arg = str(arg)  # Convert the argument to a string
+    arg = str(arg)  
     curly_braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
     if curly_braces is None:
@@ -31,10 +33,12 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb) "
+    
     __classes = {
       
     }
-
+  
+    
     def do_quit(self, arg):
         """Quit command to exit the program"""
         return True
@@ -152,21 +156,21 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
     """
-    def destroy_command(arg, storage):
+    def do_destroy(arg, storage):
         """Usage: destroy BaseModel 1234-1234-1234 i.e <id>
             Delete a class instance of a given id."""
-        argl = parseTokenizer(arg)
+        argList = parseTokenizer(arg)
         objdict = storage.all()
-        if len(argl) == 0:
+        if len(argList) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__classes:
+        elif argList[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-        elif len(argl) == 1:
+        elif len(argList) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+        elif "{}.{}".format(argList[0], argList[1]) not in objdict.keys():
             print("** no instance found **")
         else:
-            del objdict["{}.{}".format(argl[0], argl[1])]
+            del objdict["{}.{}".format(argList[0], argList[1])]
             storage.save()
 
     """
@@ -229,44 +233,46 @@ class HBNBCommand(cmd.Cmd):
     def do_update(arg, storage):
         """Usage: update <class> <id> <attribute_name> <attribute_value> For example : 
         update BaseModel 1234-1234-1234 email "aibnb@mail.com"
+        """
+        """
         Update a class instance of a given id by adding or updating
         a given attribute key/value pair or dictionary."""
 
-        argl = parseTokenizer(arg)
+        argList = parseTokenizer(arg)
         objdict = storage.all()
 
-        if len(argl) == 0:
+        if len(argList) == 0:
             print("** class name missing **")
             return False
-        if argl[0] not in HBNBCommand.__classes:
+        if argList[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return False
-        if len(argl) == 1:
+        if len(argList) == 1:
             print("** instance id missing **")
             return False
-        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+        if "{}.{}".format(argList[0], argList[1]) not in objdict.keys():
             print("** no instance found **")
             return False
-        if len(argl) == 2:
+        if len(argList) == 2:
             print("** attribute name missing **")
             return False
-        if len(argl) == 3:
+        if len(argList) == 3:
             try:
-                type(eval(argl[2])) != dict
+                type(eval(argList[2])) != dict
             except NameError:
                 print("** value missing **")
                 return False
 
-        if len(argl) == 4:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            if argl[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[argl][2])
-                obj.__dict__[argl[2]] = valtype(argl[3])
+        if len(argList) == 4:
+            obj = objdict["{}.{}".format(argList[0], argList[1])]
+            if argList[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[argList][2])
+                obj.__dict__[argList[2]] = valtype(argList[3])
             else:
-                obj.__dict__[argl[2]] = argl[3]
-        elif type(eval(argl[2])) == dict:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            for k, v in eval(argl[2]).items():
+                obj.__dict__[argList[2]] = argList[3]
+        elif type(eval(argList[2])) == dict:
+            obj = objdict["{}.{}".format(argList[0], argList[1])]
+            for k, v in eval(argList[2]).items():
                 if (k in obj.__class__.__dict__.keys() and
                         type(obj.__class__.__dict__[k]) in {str, int, float}):
                     valtype = type(obj.__class__.__dict__[k])
@@ -274,6 +280,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     obj.__dict__[k] = v
         storage.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
