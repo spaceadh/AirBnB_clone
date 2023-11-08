@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-'''AirBnB clone project File Storage'''
+
+"""Import For file_storage.py"""
 import json
 from models.base_model import BaseModel
 from models.user import User
@@ -18,14 +19,14 @@ class FileStorage:
         save: Serializes, or converts Python objects into JSON strings
         reload: Deserializes, or converts JSON strings into Python objects.
     Class Attributes:
-        __file_path (str): The name of the file to save objects to.
         __objects (dict): A dictionary of instantiated objects.
+        __file_path (str): The name of the file to save objects to.
         class_dict (dict): A dictionary of all the classes.
     """
 
-    __file_path = 'file.json'
     __objects = {}
-
+    __file_path = 'file.json'
+    
     class_dict = {"BaseModel": BaseModel, "User": User, "Place": Place,
                   "Amenity": Amenity, "City": City, "Review": Review,
                   "State": State}

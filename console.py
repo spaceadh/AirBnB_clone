@@ -6,7 +6,12 @@ import re
 from shlex import split
 from models import storage
 from models.base_model import BaseModel
-
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 def parseTokenizer(arg):
     arg = str(arg)  
@@ -34,11 +39,22 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
     
+    """
     __classes = {
       
     }
-  
+    """
     
+    __classes = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
+    }
+
     def do_quit(self, arg):
         """Quit command to exit the program"""
         return True
