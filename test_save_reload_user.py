@@ -25,3 +25,11 @@ my_user2.email = "airbnb2@mail.com"
 my_user2.password = "root"
 my_user2.save()
 print(my_user2)
+
+print("-- Create a new User 3 --")
+my_user3 = User()
+my_user3.first_name = "Alvin Wachira"
+my_user3.email = "alvinvictor023@gmail.com"
+my_user3.password = "Not giving My Password 😑"
+my_user3.save()
+print(my_user3)
