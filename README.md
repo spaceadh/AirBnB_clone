@@ -1,5 +1,5 @@
 # AirBnB_clone
-AirBnB_clone group work between Otomiwa and Alvin Wachira
+AirBnB_clone group work between Omotomiwa and Alvin Wachira
 
 # 0x00. AirBnB clone - The console
 ## Welcome to the AirBnB clone project!
@@ -55,8 +55,5 @@ $ cat test_help | ./console.py
 Documented commands (type help <topic>):
 ========================================
 EOF  help  quit
-(hbnb) 
-$
+(hbnb)
 ```
-
-All tests should also pass in non-interactive mode: `$ echo "python3 -m unittest discover tests" | bash`
