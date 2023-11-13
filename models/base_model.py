@@ -11,7 +11,8 @@ The base class to all classes in the AirBnB clone project
 class BaseModel():
     """Parent class for AirBnB clone project
     Methods:
-        __init__(self, *args, **kwargs), __str__(self), __save(self), __repr__(self), to_dict(self)
+        __init__(self, *args, **kwargs), __str__(self),
+        __save(self), __repr__(self), to_dict(self)
     """
 
     def __init__(self, *args, **kwargs):
