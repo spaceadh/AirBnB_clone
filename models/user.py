@@ -4,6 +4,7 @@
 from models.base_model import BaseModel
 import json
 
+
 class User(BaseModel):
     '''subclass of BaseModel class'''
 
