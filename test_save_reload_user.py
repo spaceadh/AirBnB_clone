@@ -33,3 +33,21 @@ my_user3.email = "alvinvictor023@gmail.com"
 my_user3.password = "Not giving My Password 😑"
 my_user3.save()
 print(my_user3)
+
+print("-- Create a new User 4 --")
+my_user4 = User()
+my_user4.first_name = "Layi"
+my_user4.last_name = "Wasabi"
+my_user4.email = "layiwasabi24@hotmail.com"
+my_user4.password = "info_leyan_finfo"
+my_user4.save()
+print(my_user4)
+
+print("-- Create a new User 4 --")
+my_user5 = User()
+my_user5.first_name = "Lionel"
+my_user5.last_name = "Messi"
+my_user5.email = "leomessi@livemail.com"
+my_user5.password = "messi_is_infinity_8"
+my_user5.save()
+print(my_user5)
