@@ -1,6 +1,6 @@
 #!/usr/bin/python3
+"""This module deine the class for file storage"""
 
-"""Import For file_storage.py"""
 import json
 from models.base_model import BaseModel
 from models.user import User
@@ -26,16 +26,15 @@ class FileStorage:
 
     __objects = {}
     __file_path = 'file.json'
-    
+
     class_dict = {"BaseModel": BaseModel, "User": User, "Place": Place,
                   "Amenity": Amenity, "City": City, "Review": Review,
                   "State": State}
-    
+
     """
     class_dict = {"BaseModel": BaseModel, "User": User}
-                 
     """
-   
+
     def all(self):
         '''Return dictionary of <class>.<id> : object instance'''
         return self.__objects
@@ -45,7 +44,7 @@ class FileStorage:
         if obj:
             key = '{}.{}'.format(obj.__class__.__name__, obj.id)
             self.__objects[key] = obj
-        
+
     def save(self):
         """Save/serialize obj dictionaries to json file"""
         obj_dict = {}
@@ -54,7 +53,7 @@ class FileStorage:
             obj_dict[key] = obj.to_dict()
         with open(self.__file_path, 'w', encoding="UTF-8") as f:
             json.dump(obj_dict, f)
-    
+
     def reload(self):
         """Deserialize/convert obj dicts back to instances, if it exists"""
         try:
@@ -64,4 +63,4 @@ class FileStorage:
                 obj = self.class_dict[value['__class__']](**value)
                 self.__objects[key] = obj
         except FileNotFoundError:
-            pass 
+            pass
