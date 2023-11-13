@@ -256,7 +256,8 @@ class HBNBCommand(cmd.Cmd):
     """
 
     def do_update(self, arg):
-        """Usage: update <class> <id> <attribute_name> <attribute_value> For example : 
+        """Usage: update <class> <id> <attribute_name>
+        <attribute_value> For example:
         update BaseModel 1234-1234-1234 email "airbnb@mail.com"
         """
         """
