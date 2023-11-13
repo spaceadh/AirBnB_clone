@@ -90,7 +90,7 @@ class HBNBCommand(c.Cmd):
     def do_quit(self, arg):
         """
             The Quit command exits the program
-            when entered into the prompt 
+            when entered into the prompt
         """
 
         return True
@@ -98,7 +98,7 @@ class HBNBCommand(c.Cmd):
     def do_EOF(self, arg):
         """
             The EOF signal exits the program
-            when Ctrl + D is entered into the prompt 
+            when Ctrl + D is entered into the prompt
         """
 
         print("")
