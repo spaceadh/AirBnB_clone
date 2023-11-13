@@ -4,8 +4,9 @@ from uuid import uuid4
 import models
 
 """
-Parent class to all classes in the AirBnB clone project
+The base class to all classes in the AirBnB clone project
 """
+
 
 class BaseModel():
     """Parent class for AirBnB clone project
