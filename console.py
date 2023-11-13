@@ -1,6 +1,8 @@
 #!/usr/bin/python3
-
-"""Import Initialization for Console.py for BNB."""
+"""
+   This is the module that implements the cmd
+   for the console interface
+"""
 
 import cmd
 import re
@@ -34,14 +36,14 @@ def parsingTokenizer(arg):
 
 
 class HBNBCommand(cmd.Cmd):
-    
+
     """Defines the HBNB command interpreter.
     Attributes:
         prompt (str): The command prompt.
     """
 
     prompt = "(hbnb) "
-    
+
     __classes = {
         "BaseModel",
         "User",
@@ -91,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         """Usage: create <class> <key 1>=<value 2> <key 2>=<value 2>
         Create a new instance of BaseModel and save it to the JSON file"""
-       
+
         try:
             if not line:
                 raise SyntaxError()
@@ -121,7 +123,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
-
 
     def do_show(self, arg):
         """Usage: show BaseModel 1234-1234-1234
@@ -172,7 +173,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(argList) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(argList[0], argList[1]) not in objDictionary.keys():
+        elif "{}.{}".format(argList[0],
+                            argList[1]) not in objDictionary.keys():
             print("** no instance found **")
         else:
             del objDictionary["{}.{}".format(argList[0], argList[1])]
@@ -225,8 +227,9 @@ class HBNBCommand(cmd.Cmd):
 
     """
     def do_update(self, arg):
-        
-        Usage: update <class> <id> <attribute_name> <attribute_value> For example : 
+
+        Usage: update <class> <id> <attribute_name>
+        <attribute_value> For example:
         update BaseModel 1234-1234-1234 email "aibnb@mail.com"
         Update a class instance of a given id by adding or updating
         a given attribute key/value pair or dictionary.
@@ -253,13 +256,14 @@ class HBNBCommand(cmd.Cmd):
     """
 
     def do_update(self, arg):
-        """Usage: update <class> <id> <attribute_name> <attribute_value> For example : 
+        """Usage: update <class> <id> <attribute_name>
+        <attribute_value> For example:
         update BaseModel 1234-1234-1234 email "aibnb@mail.com"
         """
         """
         Update a class instance of a given id by adding or updating
         a given attribute key/value pair or dictionary."""
-        
+
         argList = parsingTokenizer(arg)
         objdict = storage.all()
 
