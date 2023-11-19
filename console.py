@@ -92,7 +92,6 @@ class HBNBCommand(c.Cmd):
             The Quit command exits the program
             when entered into the prompt
         """
-
         return True
 
     def do_EOF(self, arg):
@@ -101,17 +100,21 @@ class HBNBCommand(c.Cmd):
             when Ctrl + D is entered into the prompt
         """
 
-        print("")
+        print(" ")
         return True
 
-    def do_create(self, line):
-        """Usage: create <class> <key 1>=<value 2> <key 2>=<value 2>
-        Create a new instance of BaseModel and save it to the JSON file"""
+    def do_create(self, arg):
+        """
+            Usage: create <class> <key 1>=<value 2>
+            <key 2>=<value 2>
+            This creates a new instance of BaseModel and save
+            it to the JSON file
+        """
 
         try:
-            if not line:
+            if not arg:
                 raise SyntaxError()
-            my_list = line.split(" ")
+            my_list = arg.split(" ")
 
             kwargs = {}
             for i in range(1, len(my_list)):
@@ -134,90 +137,59 @@ class HBNBCommand(c.Cmd):
             obj.save()
 
         except SyntaxError:
-            print("** class name missing **")
+            print(F"** class name missing **")
         except NameError:
-            print("** class doesn't exist **")
+            print(F"** class doesn't exist **")
 
     def do_show(self, arg):
-        """Usage: show BaseModel 1234-1234-1234
-        Display the string representation of a class instance of a given id.
+        """
+            Usage: show <class> <id> or <class>.show(<id>)
+            This displays the string representation of a class
+            instance of a given id.
         """
         argList = Parse_Token(arg)
         objDictionary = storage.all()
         if len(argList) == 0:
-            print("** class name missing **")
+            print(F"** class name missing **")
         elif argList[0] not in HBNBCommand.__classes:
-            print("** class doesn't exist **")
+            print(F"** class doesn't exist **")
         elif len(argList) == 1:
-            print("** instance id missing **")
-        elif "{}.{}".format(argList[0], argList[1]) not in objDictionary:
-            print("** no instance found **")
+            print(F"** instance id missing **")
+        elif F"{argList[0]}.{argList[1]}" not in objDictionary:
+            print(F"** no instance found **")
         else:
-            print(objDictionary["{}.{}".format(argList[0], argList[1])])
-
-    """
-    def do_destroy(self, arg):
-        Usage: destroy BaseModel 1234-1234-1234 i.e <id>
-            Delete a class instance of a given id.
-        args = arg.split()
-        if not arg:
-            print("** class name missing **")
-        elif args[0] not in storage.classes:
-            print("** class doesn't exist **")
-        elif len(args) < 2:
-            print("** instance id missing **")
-        else:
-            objects = storage.all()
-            obj_key = "{}.{}".format(args[0], args[1])
-            if obj_key in objects:
-                objects.pop(obj_key)
-                storage.save()
-            else:
-                print("** no instance found **")
-    """
+            print(objDictionary[F"{argList[0]}.{argList[1]}"])
 
     def do_destroy(self, arg):
-        """Usage: destroy BaseModel 1234-1234-1234 i.e <id>
-            Delete a class instance of a given id."""
-        argList = parsingTokenizer(arg)
+        """
+            Usage: destroy <class> <id> or <class>.destroy(<id>)
+            This deletes a class instance of a given id.
+        """
+        argList = Parse_Token(arg)
         objDictionary = storage.all()
         if len(argList) == 0:
-            print("** class name missing **")
+            print(F"** class name missing **")
         elif argList[0] not in HBNBCommand.__classes:
-            print("** class doesn't exist **")
+            print(F"** class doesn't exist **")
         elif len(argList) == 1:
-            print("** instance id missing **")
-        elif "{}.{}".format(argList[0],
-                            argList[1]) not in objDictionary.keys():
-            print("** no instance found **")
+            print(F"** instance id missing **")
+        elif F"{argList[0]}.{argList[1]}" not in objDictionary.keys():
+            print(F"** no instance found **")
         else:
-            del objDictionary["{}.{}".format(argList[0], argList[1])]
+            del objDictionary[F"{argList[0]}.{argList[1]}"]
             storage.save()
 
-    """
     def do_all(self, arg):
-        Prints string representation of all instances
-        args = arg.split()
-        objects = storage.all()
-        obj_list = []
-        if not arg:
-            for obj_key in objects:
-                obj_list.append(str(objects[obj_key]))
-            print(obj_list)
-        elif args[0] not in models.storage.all().keys():
-            print("** class doesn't exist **")
-        else:
-            for obj_key in objects:
-                if obj_key.startswith(args[0] + "."):
-                    obj_list.append(str(objects[obj_key]))
-            print(obj_list)
-    """
-
-    def do_all(self, arg):
-        """Prints string representation of all instances"""
-        argList = parsingTokenizer(arg)
+        """
+            Usage: all or all <class> or <class>.all()
+            Display string representations of all instances
+            of a given class.
+            If no class is specified, displays all
+            instantiated objects
+        """
+        argList = Parse_Token(arg)
         if len(argList) > 0 and argList[0] not in HBNBCommand.__classes:
-            print("** class doesn't exist **")
+            print(F"** class doesn't exist **")
         else:
             objl = []
             for obj in storage.all().values():
@@ -227,91 +199,65 @@ class HBNBCommand(c.Cmd):
                     objl.append(obj.__str__())
             print(objl)
 
-    """
     def do_count(self, arg):
-        Usage: <class name>.count().
-        Update to be able to retrieve the number of instances of a given class
-        argList = parsingTokenizer(arg)
+        """
+            Usage: <class name>.count().
+            This retrieves the number of instances of a
+            given class
+        """
+        argList = Parse_Token(arg)
         count = 0
         for obj in storage.all().values():
             if argList[0] == obj.__class__.__name__:
                 count += 1
         print(count)
-    """
-
-    """
-    def do_update(self, arg):
-
-        Usage: update <class> <id> <attribute_name>
-        <attribute_value> For example:
-        update BaseModel 1234-1234-1234 email "aibnb@mail.com"
-        Update a class instance of a given id by adding or updating
-        a given attribute key/value pair or dictionary.
-
-        args = arg.split()
-        if not arg:
-            print("** class name missing **")
-        elif args[0] not in storage.classes:
-            print("** class doesn't exist **")
-        elif len(args) < 2:
-            print("** instance id missing **")
-        elif len(args) < 3:
-            print("** attribute name missing **")
-        elif len(args) < 4:
-            print("** value missing **")
-        else:
-            objects = storage.all()
-            obj_key = "{}.{}".format(args[0], args[1])
-            if obj_key in objects:
-                setattr(objects[obj_key], args[2], args[3])
-                objects[obj_key].save()
-            else:
-                print("** no instance found **")
-    """
 
     def do_update(self, arg):
-        """Usage: update <class> <id> <attribute_name>
-        <attribute_value> For example:
-        update BaseModel 1234-1234-1234 email "airbnb@mail.com"
         """
+            Usage: update <class> <id> <attribute_name>
+            <attribute_value> or
+            <class>.update(<id>, <attribute_name>,
+            <attribute_value>) or
+            <class>.update(<id>, <dictionary>)
+            This updates a class instance of a given id by
+            adding or updating a given attribute
+            key/value pair or dictionary.
         """
-        Update a class instance of a given id by adding or updating
-        a given attribute key/value pair or dictionary."""
 
-        argList = parsingTokenizer(arg)
+        argList = Parse_Token(arg)
         objdict = storage.all()
 
         if len(argList) == 0:
-            print("** class name missing **")
+            print(F"** class name missing **")
             return False
         if argList[0] not in HBNBCommand.__classes:
-            print("** class doesn't exist **")
+            print(F"** class doesn't exist **")
             return False
         if len(argList) == 1:
-            print("** instance id missing **")
+            print(F"** instance id missing **")
             return False
-        if "{}.{}".format(argList[0], argList[1]) not in objdict.keys():
-            print("** no instance found **")
+        if F"{argList[0]}.{argList[1]}" not in objdict.keys():
+            print(F"** no instance found **")
             return False
         if len(argList) == 2:
-            print("** attribute name missing **")
+            print(F"** attribute name missing **")
             return False
         if len(argList) == 3:
             try:
                 type(eval(argList[2])) != dict
             except NameError:
-                print("** value missing **")
+                print(F"** value missing **")
                 return False
 
         if len(argList) == 4:
-            obj = objdict["{}.{}".format(argList[0], argList[1])]
+            obj = objdict[F"{argList[0]}.{argList[1]}"]
             if argList[2] in obj.__class__.__dict__.keys():
                 valtype = type(obj.__class__.__dict__[argList[2]])
                 obj.__dict__[argList[2]] = valtype(argList[3])
             else:
                 obj.__dict__[argList[2]] = argList[3]
         elif type(eval(argList[2])) == dict:
-            obj = objdict["{}.{}".format(argList[0], argList[1])]
+            obj = objdict[F"{argList[0]}.{argList[1]}"]
             for k, v in eval(argList[2]).items():
                 if (k in obj.__class__.__dict__.keys() and
                         type(obj.__class__.__dict__[k]) in {str, int, float}):
