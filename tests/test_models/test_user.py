@@ -5,13 +5,13 @@
 """
 import os
 import models
-import unittest
+import unittest as u
 from datetime import datetime
 from time import sleep
 from models.user import User
 
 
-class TestUser_instantiation(unittest.TestCase):
+class Test_User_instantiation(u.TestCase):
     """
         The Unittests cases for testing instantiation
         of the User class.
@@ -45,21 +45,21 @@ class TestUser_instantiation(unittest.TestCase):
         self.assertEqual(str, type(User.last_name))
 
     def test_two_users_unique_ids(self):
-        us1 = User()
-        us2 = User()
-        self.assertNotEqual(us1.id, us2.id)
+        first_us = User()
+        second_us = User()
+        self.assertNotEqual(first_us.id, second_us.id)
 
     def test_two_users_different_created_at(self):
-        us1 = User()
-        sleep(0.05)
-        us2 = User()
-        self.assertLess(us1.created_at, us2.created_at)
+        first_u = User()
+        sleep(0.10)
+        second_u = User()
+        self.assertLess(first_u.created_at, second_u.created_at)
 
     def test_two_users_different_updated_at(self):
-        us1 = User()
-        sleep(0.05)
-        us2 = User()
-        self.assertLess(us1.updated_at, us2.updated_at)
+        us_1 = User()
+        sleep(0.10)
+        us_2 = User()
+        self.assertLess(us_1.updated_at, us_2.updated_at)
 
     def test_args_unused(self):
         us = User(None)
@@ -68,8 +68,8 @@ class TestUser_instantiation(unittest.TestCase):
     def test_instantiation_with_kwargs(self):
         dt = datetime.today()
         dt_iso = dt.isoformat()
-        us = User(id="345", created_at=dt_iso, updated_at=dt_iso)
-        self.assertEqual(us.id, "345")
+        us = User(id="246", created_at=dt_iso, updated_at=dt_iso)
+        self.assertEqual(us.id, "246")
         self.assertEqual(us.created_at, dt)
         self.assertEqual(us.updated_at, dt)
 
@@ -78,8 +78,11 @@ class TestUser_instantiation(unittest.TestCase):
             User(id=None, created_at=None, updated_at=None)
 
 
-class TestUser_save(unittest.TestCase):
-    """Unittests for testing save method of the  class."""
+class Test_User_save(u.TestCase):
+    """
+       The Unittests cases to save
+       method of the class.
+    """
 
     @classmethod
     def setUp(self):
@@ -100,19 +103,19 @@ class TestUser_save(unittest.TestCase):
 
     def test_one_save(self):
         us = User()
-        sleep(0.05)
+        sleep(0.10)
         first_updated_at = us.updated_at
         us.save()
         self.assertLess(first_updated_at, us.updated_at)
 
     def test_two_saves(self):
         us = User()
-        sleep(0.05)
+        sleep(0.10)
         first_updated_at = us.updated_at
         us.save()
         second_updated_at = us.updated_at
         self.assertLess(first_updated_at, second_updated_at)
-        sleep(0.05)
+        sleep(0.10)
         us.save()
         self.assertLess(second_updated_at, us.updated_at)
 
@@ -122,8 +125,11 @@ class TestUser_save(unittest.TestCase):
             us.save(None)
 
 
-class TestUser_to_dict(unittest.TestCase):
-    """Unittests for testing to_dict method of the User class."""
+class Test_User_to_dict(u.TestCase):
+    """
+       The Unittests cases for testing to_dict
+       method of the User class.
+    """
 
     def test_to_dict_type(self):
         self.assertTrue(dict, type(User().to_dict()))
@@ -137,9 +143,9 @@ class TestUser_to_dict(unittest.TestCase):
 
     def test_to_dict_contains_added_attributes(self):
         us = User()
-        us.middle_name = "Holberton"
-        us.my_number = 98
-        self.assertEqual("Holberton", us.middle_name)
+        us.middle_name = "Wasabi"
+        us.my_number = 65
+        self.assertEqual("Wasabi", us.middle_name)
         self.assertIn("my_number", us.to_dict())
 
     def test_to_dict_datetime_attributes_are_strs(self):
@@ -152,10 +158,10 @@ class TestUser_to_dict(unittest.TestCase):
     def test_to_dict_output(self):
         dt = datetime.today()
         us = User()
-        us.id = "123456"
+        us.id = "246810"
         us.created_at = us.updated_at = dt
         tdict = {
-            'id': '123456',
+            'id': '246810',
             '__class__': 'User',
             'created_at': dt.isoformat(),
             'updated_at': dt.isoformat(),
