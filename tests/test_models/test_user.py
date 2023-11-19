@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    This module defines the unittests cases 
+    This module defines the unittests cases
     for models/user.py
 """
 import os
@@ -60,7 +60,7 @@ class TestUser_instantiation(unittest.TestCase):
         sleep(0.05)
         us2 = User()
         self.assertLess(us1.updated_at, us2.updated_at)
-    
+
     def test_args_unused(self):
         us = User(None)
         self.assertNotIn(None, us.__dict__.values())
