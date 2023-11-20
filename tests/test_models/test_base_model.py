@@ -176,4 +176,4 @@ class Test_Base_Model_to_dict(u.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    u.main()
