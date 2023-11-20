@@ -172,4 +172,4 @@ class Test_Amenity_to_dict(u.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    u.main()
