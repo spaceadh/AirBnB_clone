@@ -43,7 +43,7 @@ my_user4.password = "info_leyan_finfo"
 my_user4.save()
 print(my_user4)
 
-print("-- Create a new User 4 --")
+print("-- Create a new User 5 --")
 my_user5 = User()
 my_user5.first_name = "Lionel"
 my_user5.last_name = "Messi"
