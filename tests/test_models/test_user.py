@@ -179,4 +179,4 @@ class Test_User_to_dict(u.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    u.main()
